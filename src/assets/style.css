@@ -25,7 +25,29 @@ body {
 #app {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0 2rem;
+}
+
+h1 {
+  /* text-3xl */
+  font-size: 1.875rem;
+  line-height: calc(2.25 / 1.875);
+  font-weight: 700;
+}
+
+.app-container {
+  /* flex flex-col gap-5 */
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 5);
+}
+
+.auth-container {
+  /* flex justify-center items-center h-screen */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 @media (prefers-color-scheme: light) {

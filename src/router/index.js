@@ -1,46 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
-import AppLayout from "../layouts/AppLayout.vue";
-import HomeView from "../views/HomeView.vue";
-import AboutView from "../views/AboutView.vue";
-import UserView from "../views/UserView.vue";
-import AuthLayout from "../layouts/AuthLayout.vue";
-import LoginView from "../views/LoginView.vue";
+import authRoutes from "@/router/auth.routes";
+import appRoutes from "@/router/app.routes";
 
-const routes = [
-  {
-    path: "/",
-    component: AppLayout,
-    meta: { requiresAuth: true },
-    children: [
-      {
-        path: "",
-        name: "home",
-        component: HomeView,
-      },
-      {
-        path: "about",
-        name: "about",
-        component: AboutView,
-      },
-      {
-        path: "user/:username",
-        name: "profile",
-        component: UserView,
-      },
-    ],
-  },
-  {
-    path: "/auth",
-    component: AuthLayout,
-    children: [
-      {
-        path: "login",
-        name: "login",
-        component: LoginView,
-      },
-    ],
-  },
-];
+const routes = [...authRoutes, ...appRoutes];
 
 const router = createRouter({
   history: createWebHistory(),

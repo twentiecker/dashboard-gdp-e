@@ -1,14 +1,3 @@
-<template>
-  <div class="card">
-    <Chart
-      type="bar"
-      :data="chartData"
-      :options="chartOptions"
-      class="h-[30rem]"
-    />
-  </div>
-</template>
-
 <script setup>
 import { ref, onMounted } from "vue";
 
@@ -93,3 +82,9 @@ const setChartOptions = () => {
   };
 };
 </script>
+
+<template>
+  <div class="card">
+    <Chart type="bar" :data="chartData" :options="chartOptions" class="h-120" />
+  </div>
+</template>

@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col gap-5">
-    <h1 class="text-3xl font-bold">About View</h1>
+  <div class="app-container">
+    <h1>About View</h1>
     <p>
       Lorem, ipsum dolor sit amet consectetur adipisicing elit. Autem explicabo
       perferendis recusandae quod nostrum reprehenderit pariatur libero quas
