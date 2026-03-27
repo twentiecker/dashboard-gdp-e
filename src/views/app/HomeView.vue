@@ -9,8 +9,5 @@
       quis. Maxime iste, rem obcaecati in dolorem adipisci et fuga voluptatum
       quaerat? Iste, pariatur? Dicta ex harum quasi?
     </p>
-    <div>
-      <ComboChart />
-    </div>
   </div>
 </template>
