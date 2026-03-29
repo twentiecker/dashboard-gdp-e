@@ -54,14 +54,14 @@ watch(
   { immediate: true },
 );
 
-const selectedCity = ref();
-const cities = ref([
-  { name: "New York", code: "NY" },
-  { name: "Rome", code: "RM" },
-  { name: "London", code: "LDN" },
-  { name: "Istanbul", code: "IST" },
-  { name: "Paris", code: "PRS" },
-]);
+// const selectedCity = ref();
+// const cities = ref([
+//   { name: "New York", code: "NY" },
+//   { name: "Rome", code: "RM" },
+//   { name: "London", code: "LDN" },
+//   { name: "Istanbul", code: "IST" },
+//   { name: "Paris", code: "PRS" },
+// ]);
 
 const downloadFile = (file) => {
   const link = document.createElement("a");
@@ -80,13 +80,13 @@ const viewFile = (file) => {
     <h1>{{ content.title }}</h1>
     <p>{{ content.desc }}</p>
     <div class="flex flex-col gap-3">
-      <BaseSelect
+      <!-- <BaseSelect
         v-model="selectedCity"
         :options="cities"
         optionLabel="name"
         optionValue="code"
         placeholder="Pilih kota"
-      />
+      /> -->
       <DataTable :value="data" tableStyle="min-width: 50rem">
         <Column field="file_name" header="FILE NAME"></Column>
         <Column field="size" header="SIZE"></Column>
