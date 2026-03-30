@@ -6,26 +6,14 @@ import { getFiles, downloadFileUrl, viewFileUrl } from "@/services/fileService";
 const route = useRoute();
 const data = ref([]);
 
-const categoryContent = {
-  intl: {
-    title: "Lembaga Internasional",
-    desc: "Laporan ekonomi global yang menyajikan gambaran terkini, proyeksi, dan isu strategis ekonomi dunia dari berbagai lembaga internasional.",
+const pdbContent = {
+  pengeluaran: {
+    title: "PDB Pengeluaran",
+    desc: "PDB Pengeluaran.",
   },
-  bri: {
-    title: "BRI",
-    desc: "Laporan ekonomi yang menyajikan gambaran terkini dan insight perekonomian dari ekonom Bank BRI.",
-  },
-  mandiri: {
-    title: "Mandiri",
-    desc: "Laporan ekonomi yang menyajikan gambaran terkini dan insight perekonomian dari ekonom Bank Mandiri.",
-  },
-  kemenkeu: {
-    title: "Kemenkeu",
-    desc: "Laporan ekonomi yang menyajikan gambaran terkini, kinerja fiskal, dan arah kebijakan pemerintah.",
-  },
-  bi: {
-    title: "Bank Indonesia",
-    desc: "Laporan ekonomi yang menyajikan gambaran terkini, proyeksi, dan arah kebijakan moneter serta stabilitas keuangan.",
+  produksi: {
+    title: "PDB Produksi",
+    desc: "PDB Produksi.",
   },
 };
 
@@ -33,7 +21,7 @@ const content = ref({ title: "", desc: "" });
 
 const loadFiles = async () => {
   try {
-    const res = await getFiles(route.params.category);
+    const res = await getFiles(route.params.pdb);
     data.value = res.data;
   } catch (err) {
     console.error(err);
@@ -43,9 +31,9 @@ const loadFiles = async () => {
 onMounted(loadFiles);
 
 watch(
-  () => route.params.category,
+  () => route.params.pdb,
   (val) => {
-    content.value = categoryContent[val] || {
+    content.value = pdbContent[val] || {
       title: "Tidak ditemukan",
       desc: "",
     };
@@ -53,15 +41,6 @@ watch(
   },
   { immediate: true },
 );
-
-// const selectedCity = ref();
-// const cities = ref([
-//   { name: "New York", code: "NY" },
-//   { name: "Rome", code: "RM" },
-//   { name: "London", code: "LDN" },
-//   { name: "Istanbul", code: "IST" },
-//   { name: "Paris", code: "PRS" },
-// ]);
 
 const downloadFile = (file) => {
   const link = document.createElement("a");
@@ -80,14 +59,7 @@ const viewFile = (file) => {
     <h1>{{ content.title }}</h1>
     <p>{{ content.desc }}</p>
     <div class="flex flex-col gap-3">
-      <!-- <BaseSelect
-        v-model="selectedCity"
-        :options="cities"
-        optionLabel="name"
-        optionValue="code"
-        placeholder="Pilih kota"
-      /> -->
-      <DataTable :value="data" responsiveLayout="stack" breakpoint="768px">
+      <DataTable :value="data" tableStyle="min-width: 50rem">
         <Column field="file_name" header="FILE NAME"></Column>
         <Column field="size" header="SIZE"></Column>
         <Column field="date" header="DATE"></Column>

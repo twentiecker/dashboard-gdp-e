@@ -13,6 +13,21 @@ const appRoutes = [
         name: "insight",
         component: () => import("@/views/app/InsightView.vue"),
       },
+      {
+        path: "data",
+        name: "data",
+        component: () => import("@/views/app/DataView.vue"),
+      },
+      {
+        path: "kompilasi/:pdb",
+        name: "kompilasi",
+        component: () => import("@/views/app/KompilasiView.vue"),
+      },
+      {
+        path: "suplemen",
+        name: "suplemen",
+        component: () => import("@/views/app/SuplemenView.vue"),
+      },
     ],
   },
 ];

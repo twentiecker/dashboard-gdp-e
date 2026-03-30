@@ -24,21 +24,27 @@ const items = ref([
   {
     label: "Data & Indikator",
     icon: "pi pi-database",
-    url: "https://license365bps-my.sharepoint.com/:x:/g/personal/nhagustina_license365bps_onmicrosoft_com/IQDW5BuHdwLfRbBrsFz10KCaARPuGWByW6mXAOLzkxo8rZ8?rtime=VUjpn92L3kg",
-    target: "_blank",
+    items: [
+      { label: "Data", route: "/data" },
+      {
+        label: "Indikator",
+        url: "https://license365bps-my.sharepoint.com/:x:/g/personal/nhagustina_license365bps_onmicrosoft_com/IQDW5BuHdwLfRbBrsFz10KCaARPuGWByW6mXAOLzkxo8rZ8?rtime=VUjpn92L3kg",
+        target: "_blank",
+      },
+    ],
   },
   {
     label: "Kompilasi Angka",
     icon: "pi pi-calculator",
     items: [
-      { label: "PDB Pengeluaran", route: "/insight/intl" },
-      { label: "PDB Produksi", route: "/insight/bri" },
+      { label: "PDB Pengeluaran", route: "/kompilasi/pengeluaran" },
+      { label: "PDB Produksi", route: "/kompilasi/produksi" },
     ],
   },
   {
     label: "Suplemen",
     icon: "pi pi-paperclip",
-    command: () => router.push("/"),
+    command: () => router.push("/suplemen"),
   },
 ]);
 </script>
@@ -49,10 +55,7 @@ const items = ref([
     class="sticky top-0 z-50"
     :pt="{
       rootList: {
-        class: 'lg:!ml-53 !gap-0',
-      },
-      button: {
-        class: 'md:!ml-25',
+        class: '!gap-0',
       },
     }"
   >
@@ -81,7 +84,7 @@ const items = ref([
       </a>
     </template>
     <template #end>
-      <div class="py-2 md:mr-25 lg:mr-53">
+      <div class="py-2">
         <Image src="/logo-title.png" alt="Logo" width="150" />
       </div>
     </template>
