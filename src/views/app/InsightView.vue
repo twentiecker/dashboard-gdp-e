@@ -87,7 +87,13 @@ const viewFile = (file) => {
         optionValue="code"
         placeholder="Pilih kota"
       /> -->
-      <DataTable :value="data" responsiveLayout="stack" breakpoint="768px">
+      <DataTable
+        :value="data"
+        paginator
+        :rows="10"
+        responsiveLayout="stack"
+        breakpoint="768px"
+      >
         <Column field="file_name" header="FILE NAME"></Column>
         <Column field="size" header="SIZE"></Column>
         <Column field="date" header="DATE"></Column>

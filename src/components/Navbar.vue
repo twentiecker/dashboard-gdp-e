@@ -52,7 +52,7 @@ const items = ref([
 <template>
   <Menubar
     :model="items"
-    class="sticky top-0 z-50"
+    class="sticky top-0 z-50 h-[var(--navbar-height)]"
     :pt="{
       rootList: {
         class: '!gap-0',
