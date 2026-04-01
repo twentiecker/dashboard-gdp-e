@@ -16,9 +16,12 @@ const items = ref([
     items: [
       { label: "Lembaga Internasional", route: "/insight/intl" },
       { label: "BRI", route: "/insight/bri" },
+      { label: "BCA", route: "/insight/bca" },
       { label: "Mandiri", route: "/insight/mandiri" },
+      { label: "Pefindo", route: "/insight/pefindo" },
       { label: "Kemenkeu", route: "/insight/kemenkeu" },
       { label: "Bank Indonesia", route: "/insight/bi" },
+      { label: "Samuel Sekuritas Indonesia", route: "/insight/samuel" },
     ],
   },
   {
@@ -46,13 +49,24 @@ const items = ref([
     icon: "pi pi-paperclip",
     command: () => router.push("/suplemen"),
   },
+  {
+    label: "Materi",
+    icon: "pi pi-book",
+    items: [
+      { label: "Vicon", route: "/materi/vicon" },
+      { label: "Rapat SM", route: "/materi/rapat" },
+      { label: "Paparan Pimpinan", route: "/materi/paparan" },
+      { label: "BRS", route: "/materi/brs" },
+      { label: "Lapres", route: "/materi/lapres" },
+    ],
+  },
 ]);
 </script>
 
 <template>
   <Menubar
     :model="items"
-    class="sticky top-0 z-50 h-[var(--navbar-height)]"
+    class="sticky top-0 z-50 h-(--navbar-height)"
     :pt="{
       rootList: {
         class: '!gap-0',

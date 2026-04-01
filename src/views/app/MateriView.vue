@@ -7,37 +7,25 @@ const route = useRoute();
 const data = ref([]);
 
 const categoryContent = {
-  intl: {
-    title: "Lembaga Internasional",
-    desc: "Laporan ekonomi global yang menyajikan gambaran terkini, proyeksi, dan isu strategis ekonomi dunia dari berbagai lembaga internasional.",
+  vicon: {
+    title: "Vicon",
+    desc: "Materi Video Conference yang disampaikan oleh Direktur dan Deputi.",
   },
-  bri: {
-    title: "BRI",
-    desc: "Laporan ekonomi yang menyajikan gambaran terkini dan insight perekonomian dari ekonom Bank BRI.",
+  rapat: {
+    title: "Rapat SM",
+    desc: "Materi Rapat Subject Matter Triwulanan.",
   },
-  bca: {
-    title: "BCA",
-    desc: "Laporan ekonomi yang menyajikan gambaran terkini dan insight perekonomian dari ekonom Bank BCA.",
+  paparan: {
+    title: "Paparan Pimpinan",
+    desc: "Materi paparan yang disampaikan oleh pimpinan.",
   },
-  mandiri: {
-    title: "Mandiri",
-    desc: "Laporan ekonomi yang menyajikan gambaran terkini dan insight perekonomian dari ekonom Bank Mandiri.",
+  brs: {
+    title: "BRS",
+    desc: "Materi Berita Resmi Statistik yang memuat rilis resmi Perekonomian Indonesia Triwulanan.",
   },
-  pefindo: {
-    title: "Pefindo",
-    desc: "Laporan ekonomi yang menyajikan gambaran terkini dan insight perekonomian dari Lembaga Pefindo (PT. Pemeringkat Efek Indonesia).",
-  },
-  kemenkeu: {
-    title: "Kemenkeu",
-    desc: "Laporan ekonomi yang menyajikan gambaran terkini, kinerja fiskal, dan arah kebijakan pemerintah.",
-  },
-  bi: {
-    title: "Bank Indonesia",
-    desc: "Laporan ekonomi yang menyajikan gambaran terkini, proyeksi, dan arah kebijakan moneter serta stabilitas keuangan.",
-  },
-  samuel: {
-    title: "Samuel Sekuritas Indonesia",
-    desc: "Laporan ekonomi yang menyajikan gambaran terkini dan insight perekonomian dari Lembaga Samuel Sekuritas Indonesia.",
+  lapres: {
+    title: "Lapres",
+    desc: "Materi Laporan Presiden mengenai Perekonomian Indonesia Triwulanan.",
   },
 };
 

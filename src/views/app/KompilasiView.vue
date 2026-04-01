@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { getFiles, downloadFileUrl, viewFileUrl } from "@/services/fileService";
 
@@ -9,15 +9,13 @@ const data = ref([]);
 const pdbContent = {
   pengeluaran: {
     title: "PDB Pengeluaran",
-    desc: "PDB Pengeluaran.",
   },
   produksi: {
     title: "PDB Produksi",
-    desc: "PDB Produksi.",
   },
 };
 
-const content = ref({ title: "", desc: "" });
+const content = ref({ title: "" });
 
 const loadFiles = async () => {
   try {
@@ -28,14 +26,11 @@ const loadFiles = async () => {
   }
 };
 
-onMounted(loadFiles);
-
 watch(
   () => route.params.pdb,
   (val) => {
     content.value = pdbContent[val] || {
       title: "Tidak ditemukan",
-      desc: "",
     };
     loadFiles();
   },
@@ -57,9 +52,13 @@ const viewFile = (file) => {
 <template>
   <div class="app-container">
     <h1>{{ content.title }}</h1>
-    <p>{{ content.desc }}</p>
     <div class="flex flex-col gap-3">
-      <DataTable :value="data" tableStyle="min-width: 50rem">
+      <DataTable
+        :value="data"
+        paginator
+        :rows="10"
+        tableStyle="min-width: 50rem"
+      >
         <Column field="file_name" header="FILE NAME"></Column>
         <Column field="size" header="SIZE"></Column>
         <Column field="date" header="DATE"></Column>

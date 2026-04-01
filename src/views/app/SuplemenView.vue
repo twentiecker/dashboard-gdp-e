@@ -1,9 +1,7 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
-import { useRoute } from "vue-router";
 import { getFiles, downloadFileUrl, viewFileUrl } from "@/services/fileService";
 
-const route = useRoute();
 const data = ref([]);
 
 const loadFiles = async () => {
@@ -32,9 +30,17 @@ const viewFile = (file) => {
 <template>
   <div class="app-container">
     <h1>Suplemen</h1>
-    <p>Suplemen.</p>
+    <p>
+      Informasi yang menyajikan data dan indikator pendukung yang memberikan
+      gambaran terkini mengenai dinamika perekonomian Indonesia.
+    </p>
     <div class="flex flex-col gap-3">
-      <DataTable :value="data" tableStyle="min-width: 50rem">
+      <DataTable
+        :value="data"
+        paginator
+        :rows="10"
+        tableStyle="min-width: 50rem"
+      >
         <Column field="file_name" header="FILE NAME"></Column>
         <Column field="size" header="SIZE"></Column>
         <Column field="date" header="DATE"></Column>

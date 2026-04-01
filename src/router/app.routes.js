@@ -28,6 +28,16 @@ const appRoutes = [
         name: "suplemen",
         component: () => import("@/views/app/SuplemenView.vue"),
       },
+      {
+        path: "materi/:category",
+        name: "materi",
+        component: () => import("@/views/app/MateriView.vue"),
+      },
+      {
+        path: "upload",
+        name: "upload",
+        component: () => import("@/views/app/UploadView.vue"),
+      },
     ],
   },
 ];
