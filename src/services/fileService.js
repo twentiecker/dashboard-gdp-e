@@ -13,8 +13,16 @@ export const downloadFileUrl = (path) => {
 };
 
 export const viewFileUrl = (path) => {
-  return import.meta.env.VITE_API_BASE_URL + path;
+  return (
+    import.meta.env.VITE_API_BASE_URL +
+    "/api/v1/files/view" +
+    path.replace("/files", "")
+  );
 };
+
+// export const viewFileUrl = (path) => {
+//   return import.meta.env.VITE_API_BASE_URL + path;
+// };
 
 export const uploadFile = (formData, onProgress) => {
   return api.post("/api/v1/files/upload", formData, {
