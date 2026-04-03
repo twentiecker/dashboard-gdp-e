@@ -6,9 +6,9 @@ const props = defineProps({
 
 <template>
   <div
-    class="flex items-start gap-3 bg-yellow-50 border border-yellow-200 rounded-xl p-4 text-sm text-yellow-800"
+    class="flex items-center gap-3 bg-yellow-50 border border-yellow-200 rounded-xl p-4 text-sm text-yellow-800"
   >
-    <i class="pi pi-exclamation-triangle" style="font-size: 1rem"></i>
+    <i class="pi pi-exclamation-triangle" style="font-size: 1.5rem"></i>
     <p>
       <span class="font-semibold">Disclaimer:</span>
       {{ content }}

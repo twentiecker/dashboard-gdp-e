@@ -61,6 +61,24 @@ const items = ref([
     ],
   },
 ]);
+
+const endMenu = ref([
+  {
+    label: "Upload",
+    icon: "pi pi-cog",
+    command: () => router.push("/upload"),
+  },
+  {
+    separator: true,
+  },
+  {
+    label: "Logout",
+    icon: "pi pi-sign-out",
+    command: () => console.log("logout"),
+  },
+]);
+
+const menuRef = ref();
 </script>
 
 <template>
@@ -73,6 +91,9 @@ const items = ref([
       },
     }"
   >
+    <template #start>
+      <Image src="/logo-title.png" alt="Logo" width="100" />
+    </template>
     <template #item="{ item, props, hasSubmenu }">
       <router-link
         v-if="item.route"
@@ -98,8 +119,25 @@ const items = ref([
       </a>
     </template>
     <template #end>
-      <div class="py-2">
-        <Image src="/logo-title.png" alt="Logo" width="150" />
+      <div class="flex items-center gap-2">
+        <Button
+          text
+          size="small"
+          severity="secondary"
+          @click="(event) => menuRef.toggle(event)"
+          :pt="{
+            root: {
+              class: 'w-fit',
+            },
+          }"
+        >
+          <div class="flex items-center gap-2">
+            <Avatar image="/logo.png" shape="circle" />
+            <span>Admin</span>
+            <i class="pi pi-angle-down" style="font-size: 1rem"></i>
+          </div>
+        </Button>
+        <Menu ref="menuRef" :model="endMenu" popup />
       </div>
     </template>
   </Menubar>
