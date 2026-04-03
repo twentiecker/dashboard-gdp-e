@@ -94,7 +94,7 @@ const upload = async () => {
       />
     </div>
 
-    <div v-if="progress > 0" class="mb-4">
+    <div v-if="progress > 0 && !error" class="mb-4">
       <div class="w-full bg-gray-200 rounded-full h-2">
         <div
           class="bg-blue-500 h-2 rounded-full"

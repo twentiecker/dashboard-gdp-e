@@ -52,6 +52,9 @@ const viewFile = (file) => {
 <template>
   <div class="app-container">
     <h1>{{ content.title }}</h1>
+    <Disclaimer
+      content="Dokumen ini hanya diperuntukkan bagi internal Direktorat Neraca Pengeluaran dan tidak diperkenankan untuk disebarluaskan kepada pihak eksternal tanpa persetujuan Direktur."
+    />
     <div class="flex flex-col gap-3">
       <DataTable
         :value="data"
@@ -62,14 +65,20 @@ const viewFile = (file) => {
         <Column field="file_name" header="FILE NAME"></Column>
         <Column field="size" header="SIZE"></Column>
         <Column field="date" header="DATE"></Column>
-        <Column header="ACTION">
+        <Column>
+          <template #header>
+            <div class="mx-auto">
+              <span class="font-bold">ACTION</span>
+            </div>
+          </template>
           <template #body="slotProps">
-            <div class="flex gap-3">
+            <div class="flex justify-center gap-3">
               <i
                 class="pi pi-download cursor-pointer"
                 @click="downloadFile(slotProps.data)"
               ></i
               ><i
+                v-if="slotProps.data.ext_name === '.pdf'"
                 class="pi pi-eye cursor-pointer"
                 @click="viewFile(slotProps.data)"
               ></i>

@@ -2,6 +2,7 @@
 import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { getFiles, downloadFileUrl, viewFileUrl } from "@/services/fileService";
+import Disclaimer from "@/components/Disclaimer.vue";
 
 const route = useRoute();
 const data = ref([]);
@@ -80,32 +81,13 @@ const viewFile = (file) => {
   <div class="app-container">
     <h1>{{ content.title }}</h1>
     <p>{{ content.desc }}</p>
-    <div
-      class="flex items-start gap-3 bg-yellow-50 border border-yellow-200 rounded-xl p-4 text-sm text-yellow-800"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="w-5 h-5 mt-0.5 shrink-0 text-yellow-600"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M12 9v2m0 4h.01M12 3l9 18H3L12 3z"
-        />
-      </svg>
-      <p>
-        <span class="font-semibold">Disclaimer:</span>
-        Dokumen ini digunakan sebagai informasi, referensi, dan fenomena
-        pendukung. Informasi dan opini yang disajikan bersumber dari berbagai
-        pihak yang dianggap dapat dipercaya, namun tidak dijamin keakuratan
-        maupun kelengkapannya, sehingga tidak dapat dijadikan sebagai dasar
-        pengambilan keputusan.
-      </p>
-    </div>
+    <Disclaimer
+      content="Dokumen ini digunakan sebagai informasi, referensi, dan fenomena
+      pendukung. Informasi dan opini yang disajikan bersumber dari berbagai
+      pihak yang dianggap dapat dipercaya, namun tidak dijamin keakuratan maupun
+      kelengkapannya, sehingga tidak dapat dijadikan sebagai dasar pengambilan
+      keputusan."
+    />
     <div class="flex flex-col gap-3">
       <DataTable
         :value="data"
@@ -114,17 +96,23 @@ const viewFile = (file) => {
         responsiveLayout="stack"
         breakpoint="768px"
       >
-        <Column field="file_name" header="FILE NAME"></Column>
+        <Column field="file_name" header="FILE NAME"> </Column>
         <Column field="size" header="SIZE"></Column>
         <Column field="date" header="DATE"></Column>
-        <Column header="ACTION">
+        <Column>
+          <template #header>
+            <div class="mx-auto">
+              <span class="font-bold">ACTION</span>
+            </div>
+          </template>
           <template #body="slotProps">
-            <div class="flex gap-3">
+            <div class="flex justify-center gap-3">
               <i
                 class="pi pi-download cursor-pointer"
                 @click="downloadFile(slotProps.data)"
               ></i
               ><i
+                v-if="slotProps.data.ext_name === '.pdf'"
                 class="pi pi-eye cursor-pointer"
                 @click="viewFile(slotProps.data)"
               ></i>
