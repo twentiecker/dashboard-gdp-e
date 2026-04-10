@@ -2,9 +2,14 @@
 import { ref } from "vue";
 import { useToast } from "primevue/usetoast";
 import { useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/auth";
+
+const auth = useAuthStore();
 
 const toast = useToast();
 const router = useRouter();
+
+const loading = ref(false);
 
 const initialValues = ref({
   username: "",
@@ -48,27 +53,30 @@ const resolver = ({ values }) => {
   };
 };
 
-const onFormSubmit = ({ valid, values }) => {
-  if (valid && values.username === "admin" && values.password === "admin") {
-    localStorage.setItem("isLogin", "true");
+const onFormSubmit = async ({ valid, values }) => {
+  if (!valid) return;
+
+  loading.value = true;
+
+  try {
+    await auth.login(values.username, values.password);
 
     toast.add({
       severity: "success",
-      summary: "Form is submitted.",
+      summary: "Login berhasil!",
       life: 3000,
     });
 
-    router.push("/");
-  } else if (
-    valid &&
-    values.username !== "admin" &&
-    values.password !== "admin"
-  ) {
+    router.push({ name: "home" });
+  } catch (err) {
     toast.add({
       severity: "error",
-      summary: "Authentication failed.",
+      summary: "Login gagal",
+      detail: "Email atau password salah",
       life: 3000,
     });
+  } finally {
+    loading.value = false;
   }
 };
 </script>
@@ -119,8 +127,10 @@ const onFormSubmit = ({ valid, values }) => {
       <div class="flex flex-col items-center gap-1">
         <Button
           type="submit"
-          severity="secondary"
-          label="Submit"
+          severity="contrast"
+          variant="outlined"
+          label="Login"
+          :loading="loading"
           class="w-full"
         />
         <p class="text-xs">

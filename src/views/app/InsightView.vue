@@ -85,8 +85,7 @@ const viewFile = (file) => {
       content="Dokumen ini digunakan sebagai informasi, referensi, dan fenomena
       pendukung. Informasi dan opini yang disajikan bersumber dari berbagai
       pihak yang dianggap dapat dipercaya, namun tidak dijamin keakuratan maupun
-      kelengkapannya, sehingga tidak dapat dijadikan sebagai dasar pengambilan
-      keputusan."
+      kelengkapannya."
     />
     <div class="flex flex-col gap-3">
       <DataTable

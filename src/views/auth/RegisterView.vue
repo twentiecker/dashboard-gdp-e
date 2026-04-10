@@ -105,8 +105,9 @@ const onFormSubmit = ({ valid, values }) => {
       <div class="flex flex-col items-center gap-1">
         <Button
           type="submit"
-          severity="secondary"
-          label="Submit"
+          variant="outlined"
+          severity="contrast"
+          label="Register"
           class="w-full"
         />
         <p class="text-xs">

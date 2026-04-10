@@ -37,6 +37,7 @@ const appRoutes = [
         path: "upload",
         name: "upload",
         component: () => import("@/views/app/UploadView.vue"),
+        meta: { requiresAuth: true, role: "admin" }, // 🔥 PROTECTED
       },
     ],
   },

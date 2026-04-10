@@ -1,14 +1,16 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/auth";
 
 const router = useRouter();
+const auth = useAuthStore();
 
 const items = ref([
   {
     label: "Beranda",
     icon: "pi pi-home",
-    command: () => router.push("/"),
+    command: () => router.push({ name: "home" }),
   },
   {
     label: "Insight Ekonomi",
@@ -47,7 +49,7 @@ const items = ref([
   {
     label: "Suplemen",
     icon: "pi pi-paperclip",
-    command: () => router.push("/suplemen"),
+    command: () => router.push({ name: "suplemen" }),
   },
   {
     label: "Materi",
@@ -61,6 +63,45 @@ const items = ref([
     ],
   },
 ]);
+
+const login = () => router.push({ name: "login" });
+
+const endMenu = ref();
+/*const endItems = ref([
+  {
+    label: "Upload",
+    icon: "pi pi-upload",
+    command: () => router.push({ name: "upload" }),
+  },
+  {
+    label: "Signout",
+    icon: "pi pi-sign-out",
+    command: () => auth.logout(),
+  },
+]);*/
+const endItems = computed(() => {
+  const items = [];
+
+  if (auth.user.role === "admin") {
+    items.push({
+      label: "Upload",
+      icon: "pi pi-upload",
+      command: () => router.push({ name: "upload" }),
+    });
+  }
+
+  items.push({
+    label: "Signout",
+    icon: "pi pi-sign-out",
+    command: () => auth.logout(),
+  });
+
+  return items;
+});
+
+const toggle = (event) => {
+  endMenu.value.toggle(event);
+};
 </script>
 
 <template>
@@ -69,10 +110,13 @@ const items = ref([
     class="sticky top-0 z-50 h-(--navbar-height)"
     :pt="{
       rootList: {
-        class: '!gap-0',
+        class: '!gap-0 text-sm',
       },
     }"
   >
+    <template #start>
+      <Image src="/logo-title.png" alt="Logo" width="90" class="mx-2" />
+    </template>
     <template #item="{ item, props, hasSubmenu }">
       <router-link
         v-if="item.route"
@@ -98,8 +142,44 @@ const items = ref([
       </a>
     </template>
     <template #end>
-      <div class="py-2">
-        <Image src="/logo-title.png" alt="Logo" width="150" />
+      <div v-if="!auth.user">
+        <Button
+          label="Login"
+          text
+          severity="contrast"
+          icon="pi pi-sign-in"
+          size="small"
+          @click="login"
+        />
+      </div>
+      <div v-else>
+        <Button
+          type="button"
+          text
+          severity="contrast"
+          size="small"
+          @click="toggle"
+          aria-haspopup="true"
+          aria-controls="overlay_menu"
+          ><div class="flex items-center gap-2">
+            <Image src="/logo.png" alt="Image" width="21" />
+            <span class="font-medium">{{ auth.user.role }}</span>
+            <i class="pi pi-angle-down" style="font-size: 1rem"></i></div
+        ></Button>
+        <Menu
+          ref="endMenu"
+          id="overlay_menu"
+          :model="endItems"
+          :popup="true"
+          :pt="{
+            itemIcon: {
+              class: '!text-xs',
+            },
+            itemLabel: {
+              class: 'text-sm',
+            },
+          }"
+        />
       </div>
     </template>
   </Menubar>
