@@ -1,6 +1,7 @@
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted } from "vue";
 import { getFiles, downloadFileUrl, viewFileUrl } from "@/services/fileService";
+import Disclaimer from "@/components/Disclaimer.vue";
 
 const data = ref([]);
 

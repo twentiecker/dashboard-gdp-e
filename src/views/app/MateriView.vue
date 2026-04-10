@@ -2,6 +2,7 @@
 import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { getFiles, downloadFileUrl, viewFileUrl } from "@/services/fileService";
+import Disclaimer from "@/components/Disclaimer.vue";
 
 const route = useRoute();
 const data = ref([]);
