@@ -6,6 +6,8 @@ const selectedCategory = ref(null);
 const category = ref([
   { name: "Lembaga Internasional", code: "intl" },
   { name: "BRI", code: "bri" },
+  { name: "LPS", code: "lps" },
+  { name: "INDEF", code: "indef" },
   { name: "BCA", code: "bca" },
   { name: "Mandiri", code: "mandiri" },
   { name: "Pefindo", code: "pefindo" },

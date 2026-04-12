@@ -2,19 +2,12 @@
 import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { getFiles, downloadFileUrl, viewFileUrl } from "@/services/fileService";
+import { getFileType } from "@/utils/fileType";
+import { categoryContent } from "@/constants/categoryContent";
 import Disclaimer from "@/components/Disclaimer.vue";
 
 const route = useRoute();
 const data = ref([]);
-
-const pdbContent = {
-  pengeluaran: {
-    title: "PDB Pengeluaran",
-  },
-  produksi: {
-    title: "PDB Produksi",
-  },
-};
 
 const content = ref({ title: "" });
 
@@ -30,7 +23,7 @@ const loadFiles = async () => {
 watch(
   () => route.params.pdb,
   (val) => {
-    content.value = pdbContent[val] || {
+    content.value = categoryContent[val] || {
       title: "Tidak ditemukan",
     };
     loadFiles();
@@ -63,7 +56,18 @@ const viewFile = (file) => {
         :rows="10"
         tableStyle="min-width: 50rem"
       >
-        <Column field="file_name" header="FILE NAME"></Column>
+        <Column header="FILE NAME">
+          <template #body="slotProps">
+            <div class="flex items-center gap-3">
+              <img
+                :src="`/icons/${getFileType(slotProps.data.ext_name)}.png`"
+                :alt="getFileType(slotProps.data.ext_name)"
+                class="w-8"
+              />
+              <p>{{ slotProps.data.file_name }}</p>
+            </div>
+          </template>
+        </Column>
         <Column field="size" header="SIZE"></Column>
         <Column field="date" header="DATE"></Column>
         <Column>

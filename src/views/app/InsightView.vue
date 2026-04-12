@@ -1,48 +1,29 @@
 <script setup>
-import { ref, watch } from "vue";
+import { ref, computed, watch } from "vue";
 import { useRoute } from "vue-router";
 import { getFiles, downloadFileUrl, viewFileUrl } from "@/services/fileService";
+import { categoryContent } from "@/constants/categoryContent";
+import { getFileType } from "@/utils/fileType";
+import { filterByFileName } from "@/utils/filterFile";
 import Disclaimer from "@/components/Disclaimer.vue";
 
 const route = useRoute();
 const data = ref([]);
 
-const categoryContent = {
-  intl: {
-    title: "Lembaga Internasional",
-    desc: "Laporan ekonomi global yang menyajikan gambaran terkini, proyeksi, dan isu strategis ekonomi dunia dari berbagai lembaga internasional.",
-  },
-  bri: {
-    title: "BRI",
-    desc: "Laporan ekonomi yang menyajikan gambaran terkini dan insight perekonomian dari ekonom Bank BRI.",
-  },
-  bca: {
-    title: "BCA",
-    desc: "Laporan ekonomi yang menyajikan gambaran terkini dan insight perekonomian dari ekonom Bank BCA.",
-  },
-  mandiri: {
-    title: "Mandiri",
-    desc: "Laporan ekonomi yang menyajikan gambaran terkini dan insight perekonomian dari ekonom Bank Mandiri.",
-  },
-  pefindo: {
-    title: "Pefindo",
-    desc: "Laporan ekonomi yang menyajikan gambaran terkini dan insight perekonomian dari Lembaga Pefindo (PT. Pemeringkat Efek Indonesia).",
-  },
-  kemenkeu: {
-    title: "Kemenkeu",
-    desc: "Laporan ekonomi yang menyajikan gambaran terkini, kinerja fiskal, dan arah kebijakan pemerintah.",
-  },
-  bi: {
-    title: "Bank Indonesia",
-    desc: "Laporan ekonomi yang menyajikan gambaran terkini, proyeksi, dan arah kebijakan moneter serta stabilitas keuangan.",
-  },
-  samuel: {
-    title: "Samuel Sekuritas Indonesia",
-    desc: "Laporan ekonomi yang menyajikan gambaran terkini dan insight perekonomian dari Lembaga Samuel Sekuritas Indonesia.",
-  },
-};
-
 const content = ref({ title: "", desc: "" });
+
+const selectedOrg = ref({ name: "All", code: "" });
+const orgs = ref([
+  { name: "All", code: "" },
+  { name: "UN", code: "un" },
+  { name: "ADB", code: "adb" },
+  { name: "IMF", code: "imf" },
+  { name: "AMRO", code: "amro" },
+  { name: "OECD", code: "oecd" },
+  { name: "UNCTAD", code: "unctad" },
+  { name: "WORLD BANK", code: "world_bank" },
+  { name: "S&P GLOBAL", code: "snp_global" },
+]);
 
 const loadFiles = async () => {
   try {
@@ -52,6 +33,10 @@ const loadFiles = async () => {
     console.error(err);
   }
 };
+
+const filteredData = computed(() =>
+  filterByFileName(data.value, selectedOrg.value.code),
+);
 
 watch(
   () => route.params.category,
@@ -87,15 +72,41 @@ const viewFile = (file) => {
       pihak yang dianggap dapat dipercaya, namun tidak dijamin keakuratan maupun
       kelengkapannya."
     />
+    <FloatLabel
+      v-if="route.params.category === 'intl'"
+      class="w-full"
+      variant="in"
+    >
+      <Select
+        v-model="selectedOrg"
+        inputId="in_label"
+        :options="orgs"
+        optionLabel="name"
+        class="w-full"
+        variant="filled"
+      />
+      <label for="in_label">Organization</label>
+    </FloatLabel>
     <div class="flex flex-col gap-3">
       <DataTable
-        :value="data"
+        :value="filteredData"
         paginator
         :rows="10"
         responsiveLayout="stack"
         breakpoint="768px"
       >
-        <Column field="file_name" header="FILE NAME"> </Column>
+        <Column header="FILE NAME">
+          <template #body="slotProps">
+            <div class="flex items-center gap-3">
+              <img
+                :src="`/icons/${getFileType(slotProps.data.ext_name)}.png`"
+                :alt="getFileType(slotProps.data.ext_name)"
+                class="w-8"
+              />
+              <p>{{ slotProps.data.file_name }}</p>
+            </div>
+          </template>
+        </Column>
         <Column field="size" header="SIZE"></Column>
         <Column field="date" header="DATE"></Column>
         <Column>

@@ -2,33 +2,12 @@
 import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { getFiles, downloadFileUrl, viewFileUrl } from "@/services/fileService";
+import { categoryContent } from "@/constants/categoryContent";
+import { getFileType } from "@/utils/fileType";
 import Disclaimer from "@/components/Disclaimer.vue";
 
 const route = useRoute();
 const data = ref([]);
-
-const categoryContent = {
-  vicon: {
-    title: "Vicon",
-    desc: "Materi Video Conference yang disampaikan oleh Direktur dan Deputi.",
-  },
-  rapat: {
-    title: "Rapat SM",
-    desc: "Materi Rapat Subject Matter Triwulanan.",
-  },
-  paparan: {
-    title: "Paparan Pimpinan",
-    desc: "Materi paparan yang disampaikan oleh pimpinan.",
-  },
-  brs: {
-    title: "BRS",
-    desc: "Materi Berita Resmi Statistik yang memuat rilis resmi Perekonomian Indonesia Triwulanan.",
-  },
-  lapres: {
-    title: "Lapres",
-    desc: "Materi Laporan Presiden mengenai Perekonomian Indonesia Triwulanan.",
-  },
-};
 
 const content = ref({ title: "", desc: "" });
 
@@ -80,7 +59,18 @@ const viewFile = (file) => {
         responsiveLayout="stack"
         breakpoint="768px"
       >
-        <Column field="file_name" header="FILE NAME"></Column>
+        <Column header="FILE NAME">
+          <template #body="slotProps">
+            <div class="flex items-center gap-3">
+              <img
+                :src="`/icons/${getFileType(slotProps.data.ext_name)}.png`"
+                :alt="getFileType(slotProps.data.ext_name)"
+                class="w-8"
+              />
+              <p>{{ slotProps.data.file_name }}</p>
+            </div>
+          </template>
+        </Column>
         <Column field="size" header="SIZE"></Column>
         <Column field="date" header="DATE"></Column>
         <Column>

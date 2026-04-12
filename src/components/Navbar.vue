@@ -18,6 +18,8 @@ const items = ref([
     items: [
       { label: "Lembaga Internasional", route: "/insight/intl" },
       { label: "BRI", route: "/insight/bri" },
+      { label: "LPS", route: "/insight/lps" },
+      { label: "INDEF", route: "/insight/indef" },
       { label: "BCA", route: "/insight/bca" },
       { label: "Mandiri", route: "/insight/mandiri" },
       { label: "Pefindo", route: "/insight/pefindo" },
@@ -67,18 +69,6 @@ const items = ref([
 const login = () => router.push({ name: "login" });
 
 const endMenu = ref();
-/*const endItems = ref([
-  {
-    label: "Upload",
-    icon: "pi pi-upload",
-    command: () => router.push({ name: "upload" }),
-  },
-  {
-    label: "Signout",
-    icon: "pi pi-sign-out",
-    command: () => auth.logout(),
-  },
-]);*/
 const endItems = computed(() => {
   const items = [];
 

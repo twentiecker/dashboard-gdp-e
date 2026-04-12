@@ -1,5 +1,17 @@
 import api from "@/services/api";
 
+export const getRecentFiles = (limit = 6) => {
+  return api.get(`/api/v1/files/data/recent?limit=${limit}`);
+};
+
+export const downloadRecentFileUrl = (path) => {
+  return (
+    import.meta.env.VITE_API_BASE_URL +
+    "/api/v1/files/download" +
+    path.replace("public/files", "")
+  );
+};
+
 export const getFiles = (category) => {
   return api.get(`/api/v1/files/${category}`);
 };
