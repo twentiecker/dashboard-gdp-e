@@ -34,10 +34,11 @@ const items = ref([
     items: [
       { label: "Data", route: "/data" },
       {
-        label: "Indikator",
+        label: "Lembar Kerja",
         url: "https://license365bps-my.sharepoint.com/:x:/g/personal/nhagustina_license365bps_onmicrosoft_com/IQDW5BuHdwLfRbBrsFz10KCaARPuGWByW6mXAOLzkxo8rZ8?rtime=VUjpn92L3kg",
         target: "_blank",
       },
+      { label: "Dashboard", route: "/dashboard" },
     ],
   },
   {

@@ -19,6 +19,11 @@ const appRoutes = [
         component: () => import("@/views/app/DataView.vue"),
       },
       {
+        path: "dashboard",
+        name: "dashboard",
+        component: () => import("@/views/app/DashboardView.vue"),
+      },
+      {
         path: "kompilasi/:pdb",
         name: "kompilasi",
         component: () => import("@/views/app/KompilasiView.vue"),
