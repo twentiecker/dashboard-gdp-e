@@ -3,6 +3,14 @@ const categoryContent = {
     title: "Lembaga Internasional",
     desc: "Laporan ekonomi global yang menyajikan gambaran terkini, proyeksi, dan isu strategis ekonomi dunia dari berbagai lembaga internasional.",
   },
+  bca: {
+    title: "BCA",
+    desc: "Laporan ekonomi yang menyajikan gambaran terkini dan insight perekonomian dari ekonom Bank BCA.",
+  },
+  djsef: {
+    title: "DJSEF",
+    desc: "Laporan ekonomi yang menyajikan gambaran terkini dan insight perekonomian dari Direktorat Jenderal Strategi Ekonomi dan Fiskal (DJSEF).",
+  },
   bri: {
     title: "BRI",
     desc: "Laporan ekonomi yang menyajikan gambaran terkini dan insight perekonomian dari ekonom Bank BRI.",
@@ -15,9 +23,9 @@ const categoryContent = {
     title: "INDEF",
     desc: "Laporan ekonomi yang menyajikan gambaran terkini dan insight perekonomian dari Lembaga INDEF.",
   },
-  bca: {
-    title: "BCA",
-    desc: "Laporan ekonomi yang menyajikan gambaran terkini dan insight perekonomian dari ekonom Bank BCA.",
+  danamon: {
+    title: "Danamon",
+    desc: "Laporan ekonomi yang menyajikan gambaran terkini dan insight perekonomian dari ekonom Bank Danamon.",
   },
   mandiri: {
     title: "Mandiri",
@@ -26,6 +34,10 @@ const categoryContent = {
   pefindo: {
     title: "Pefindo",
     desc: "Laporan ekonomi yang menyajikan gambaran terkini dan insight perekonomian dari Lembaga Pefindo (PT. Pemeringkat Efek Indonesia).",
+  },
+  kemenko: {
+    title: "Kemenko",
+    desc: "Laporan ekonomi yang menyajikan gambaran terkini, kinerja fiskal, dan arah kebijakan pemerintah.",
   },
   kemenkeu: {
     title: "Kemenkeu",

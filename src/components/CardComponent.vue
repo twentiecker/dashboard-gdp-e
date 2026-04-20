@@ -3,9 +3,6 @@ import { computed } from "vue";
 import { useChartStore } from "@/stores/useChartStore";
 import LineChartComponent from "@/components/LineChartComponent.vue";
 
-// import { useChartStore } from "../stores/useChartStore";
-// import LineChartComponent from "./LineChartComponent.vue";
-
 const props = defineProps({
   datasets: Object,
   isGabung: { type: Boolean, default: false },
@@ -39,6 +36,90 @@ const FILTER_OPTIONS = {
 
 const config = computed(() => chartStore.getCompareConfig(props.datasets));
 
+const isFiniteNumber = (value) =>
+  typeof value === "number" && Number.isFinite(value);
+
+const hasValidArrayData = (arr = []) =>
+  Array.isArray(arr) && arr.some((value) => isFiniteNumber(value));
+
+const hasValidSeriesData = (seriesLike) => {
+  const data = Array.isArray(seriesLike?.data) ? seriesLike.data : [];
+  return data.some((value) => isFiniteNumber(value));
+};
+
+const allowMonthlyByMeta = computed(() => {
+  const value = props.datasets?.aggregationAvailability?.allowMonthly;
+  return typeof value === "boolean" ? value : true;
+});
+
+const allowQuarterlyByMeta = computed(() => {
+  const value = props.datasets?.aggregationAvailability?.allowQuarterly;
+  return typeof value === "boolean" ? value : true;
+});
+
+const allowYearlyByMeta = computed(() => {
+  const value = props.datasets?.aggregationAvailability?.allowYearly;
+  return typeof value === "boolean" ? value : true;
+});
+
+const datasetHasAggregationData = (dataset, aggregation, measure = "nilai") => {
+  if (!dataset) return false;
+
+  if (
+    aggregation === "monthly" &&
+    dataset?.aggregationAvailability?.allowMonthly === false
+  ) {
+    return false;
+  }
+
+  if (
+    aggregation === "quarterly" &&
+    dataset?.aggregationAvailability?.allowQuarterly === false
+  ) {
+    return false;
+  }
+
+  if (
+    aggregation === "yearly" &&
+    dataset?.aggregationAvailability?.allowYearly === false
+  ) {
+    return false;
+  }
+
+  if (measure === "nilai") {
+    if (aggregation === "monthly")
+      return hasValidArrayData(dataset?.series?.monthly);
+    if (aggregation === "quarterly")
+      return hasValidArrayData(dataset?.series?.quarterly);
+    if (aggregation === "yearly")
+      return hasValidArrayData(dataset?.series?.yearly);
+    return false;
+  }
+
+  if (aggregation === "monthly") {
+    return (
+      hasValidSeriesData(dataset?.growth?.monthly?.mtom) ||
+      hasValidSeriesData(dataset?.growth?.monthly?.yony_m) ||
+      hasValidSeriesData(dataset?.growth?.monthly?.yony) ||
+      hasValidSeriesData(dataset?.growth?.monthly?.ytod)
+    );
+  }
+
+  if (aggregation === "quarterly") {
+    return (
+      hasValidSeriesData(dataset?.growth?.quarterly?.qtoq) ||
+      hasValidSeriesData(dataset?.growth?.quarterly?.yony) ||
+      hasValidSeriesData(dataset?.growth?.quarterly?.ctoc)
+    );
+  }
+
+  if (aggregation === "yearly") {
+    return hasValidSeriesData(dataset?.growth?.yearly);
+  }
+
+  return false;
+};
+
 const getSeriesByConfig = (dataset, cfg) => {
   const measure = cfg?.measure ?? "nilai";
   const aggregation =
@@ -66,6 +147,13 @@ const getSeriesByConfig = (dataset, cfg) => {
 
   if (aggregation === "yearly") {
     return dataset?.growth?.yearly ?? { data: [], periods: [] };
+  }
+
+  if (aggregation === "monthly" && method === "yony") {
+    return (
+      dataset?.growth?.monthly?.yony_m ??
+      dataset?.growth?.monthly?.yony ?? { data: [], periods: [] }
+    );
   }
 
   return dataset?.growth?.[aggregation]?.[method] ?? { data: [], periods: [] };
@@ -135,35 +223,47 @@ const isPrimary = computed(() => chartStore.primaryId === props.datasets.id);
 const isDisabled = computed(() => chartStore.isLocked && !isSelected.value);
 const isExpanded = computed(() => chartStore.isExpanded(props.datasets.id));
 
-const apiPrefix = computed(() =>
-  String(props.datasets?.apiFreqPrefix ?? props.datasets?.apiCode ?? "")
-    .charAt(0)
-    .toUpperCase(),
+const canChooseMonthly = computed(() =>
+  datasetHasAggregationData(
+    props.datasets,
+    "monthly",
+    config.value?.measure ?? "nilai",
+  ),
 );
 
-const canChooseMonthly = computed(() => {
-  if (apiPrefix.value === "Q") return false;
-  return props.datasets.rawFrequency === "monthly";
-});
-
-const canChooseQuarterly = computed(
-  () =>
-    props.datasets.rawFrequency === "monthly" ||
-    props.datasets.rawFrequency === "quarterly",
+const canChooseQuarterly = computed(() =>
+  datasetHasAggregationData(
+    props.datasets,
+    "quarterly",
+    config.value?.measure ?? "nilai",
+  ),
 );
 
-const canChooseYearly = computed(() => true);
+const canChooseYearly = computed(() =>
+  datasetHasAggregationData(
+    props.datasets,
+    "yearly",
+    config.value?.measure ?? "nilai",
+  ),
+);
 
 const isCardMonthlyDisabled = computed(() => {
+  if (!allowMonthlyByMeta.value) return true;
   if (!canChooseMonthly.value) return true;
   if (!props.isGabung) return false;
   return props.monthlyDisabled;
 });
 
 const isCardQuarterlyDisabled = computed(() => {
+  if (!allowQuarterlyByMeta.value) return true;
   if (!canChooseQuarterly.value) return true;
   if (!props.isGabung) return false;
   return props.quarterlyDisabled;
+});
+
+const isCardYearlyDisabled = computed(() => {
+  if (!allowYearlyByMeta.value) return true;
+  return !canChooseYearly.value;
 });
 
 const showAggregationFilter = computed(() => !!config.value.measure);
@@ -200,6 +300,9 @@ const onClickCard = () => {
       "Apakah ingin melihat chart ini saja?",
     );
     if (!confirmChange) return;
+
+    chartStore.showOnly(props.datasets);
+    return;
   }
 
   chartStore.setPrimary(props.datasets);
@@ -347,10 +450,23 @@ const onMethodChange = (e) => {
           <option value="quarterly" :disabled="isCardQuarterlyDisabled">
             Triwulanan
           </option>
-          <option value="yearly" :disabled="!canChooseYearly">Tahunan</option>
+          <option value="yearly" :disabled="isCardYearlyDisabled">
+            Tahunan
+          </option>
         </select>
 
-        <p v-if="!canChooseMonthly" class="text-[11px] mt-1 theme-text-muted">
+        <p
+          v-if="!allowQuarterlyByMeta || !allowYearlyByMeta"
+          class="text-[11px] mt-1 theme-text-muted"
+        >
+          Turunan periode dinonaktifkan karena nilai konversi pada endpoint kode
+          adalah NaN.
+        </p>
+
+        <p
+          v-else-if="!canChooseMonthly"
+          class="text-[11px] mt-1 theme-text-muted"
+        >
           Kode dengan prefix Q tidak bisa memilih periode bulanan.
         </p>
       </div>

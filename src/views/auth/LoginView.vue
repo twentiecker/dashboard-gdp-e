@@ -113,6 +113,7 @@ const onFormSubmit = async ({ valid, values }) => {
             name="password"
             type="text"
             placeholder="Password"
+            toggleMask
             fluid
           />
           <Message
@@ -133,11 +134,11 @@ const onFormSubmit = async ({ valid, values }) => {
           :loading="loading"
           class="w-full"
         />
-        <p class="text-xs">
+        <!-- <p class="text-xs">
           Don't have an account?
           <router-link :to="{ name: 'register' }">Register</router-link>
           here
-        </p>
+        </p> -->
       </div>
     </Form>
   </div>

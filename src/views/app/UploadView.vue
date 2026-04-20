@@ -1,29 +1,16 @@
 <script setup>
 import { ref, computed } from "vue";
 import { uploadFile } from "@/services/fileService";
+import { categoryContent } from "@/constants/categoryContent";
 
 const selectedCategory = ref(null);
-const category = ref([
-  { name: "Lembaga Internasional", code: "intl" },
-  { name: "BRI", code: "bri" },
-  { name: "LPS", code: "lps" },
-  { name: "INDEF", code: "indef" },
-  { name: "BCA", code: "bca" },
-  { name: "Mandiri", code: "mandiri" },
-  { name: "Pefindo", code: "pefindo" },
-  { name: "Kemenkeu", code: "kemenkeu" },
-  { name: "Bank Indonesia", code: "bi" },
-  { name: "Samuel Sekuritas Indonesia", code: "samuel" },
-  { name: "Data", code: "data" },
-  { name: "PDB Pengeluaran", code: "pengeluaran" },
-  { name: "PDB Produksi", code: "produksi" },
-  { name: "Suplemen", code: "suplemen" },
-  { name: "Vicon", code: "vicon" },
-  { name: "Rapat SM", code: "rapat" },
-  { name: "Paparan Pimpinan", code: "paparan" },
-  { name: "BRS", code: "brs" },
-  { name: "Lapres", code: "lapres" },
-]);
+
+const category = ref(
+  Object.entries(categoryContent).map(([code, value]) => ({
+    name: value.title,
+    code: code,
+  })),
+);
 
 const date = ref();
 const formattedDate = computed(() => {

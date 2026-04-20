@@ -21,8 +21,8 @@ const orgs = ref([
   { name: "AMRO", code: "amro" },
   { name: "OECD", code: "oecd" },
   { name: "UNCTAD", code: "unctad" },
-  { name: "WORLD BANK", code: "world_bank" },
-  { name: "S&P GLOBAL", code: "snp_global" },
+  { name: "WORLD BANK", code: "world bank" },
+  { name: "S&P GLOBAL", code: "s&p global" },
 ]);
 
 const loadFiles = async () => {

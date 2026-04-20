@@ -44,7 +44,8 @@ const viewFile = (file) => {
         :value="data"
         paginator
         :rows="10"
-        tableStyle="min-width: 50rem"
+        responsiveLayout="stack"
+        breakpoint="768px"
       >
         <Column header="FILE NAME">
           <template #body="slotProps">

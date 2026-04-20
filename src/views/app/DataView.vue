@@ -1,8 +1,26 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { getFiles, downloadFileUrl, viewFileUrl } from "@/services/fileService";
 import { getFileType } from "@/utils/fileType";
+import { filterByFileName } from "@/utils/filterFile";
+import { useAuthStore } from "@/stores/auth";
 import Disclaimer from "@/components/Disclaimer.vue";
+
+const auth = useAuthStore();
+
+const allowedRoles = ["admin", "direktur", "konsolidator"];
+const isAllowed = computed(() => allowedRoles.includes(auth.user?.role));
+
+const selectedComp = ref({ name: "All", code: "" });
+const components = ref([
+  { name: "All", code: "" },
+  { name: "PKRT", code: "pkrt" },
+  { name: "PKLNPRT", code: "pklnprt" },
+  { name: "PKP", code: "pkp" },
+  { name: "PMTB", code: "pmtb" },
+  { name: "PI", code: "pi" },
+  { name: "XM", code: "xm" },
+]);
 
 const data = ref([]);
 
@@ -14,6 +32,13 @@ const loadFiles = async () => {
     console.error(err);
   }
 };
+
+const filteredData = computed(() =>
+  filterByFileName(
+    data.value,
+    isAllowed.value ? selectedComp.value.code : auth.user?.role,
+  ),
+);
 
 onMounted(loadFiles);
 
@@ -39,12 +64,24 @@ const viewFile = (file) => {
     <Disclaimer
       content="Dokumen ini hanya diperuntukkan bagi internal Direktorat Neraca Pengeluaran dan tidak diperkenankan untuk disebarluaskan kepada pihak eksternal tanpa persetujuan Direktur."
     />
+    <FloatLabel v-if="isAllowed" class="w-full" variant="in">
+      <Select
+        v-model="selectedComp"
+        inputId="in_label"
+        :options="components"
+        optionLabel="name"
+        class="w-full"
+        variant="filled"
+      />
+      <label for="in_label">Components</label>
+    </FloatLabel>
     <div class="flex flex-col gap-3">
       <DataTable
-        :value="data"
+        :value="filteredData"
         paginator
         :rows="10"
-        tableStyle="min-width: 50rem"
+        responsiveLayout="stack"
+        breakpoint="768px"
       >
         <Column header="FILE NAME">
           <template #body="slotProps">

@@ -14,21 +14,42 @@ const router = createRouter({
 router.beforeEach((to) => {
   const auth = useAuthStore();
 
+  // restore session jika ada token
   if (!auth.user && auth.accessToken) {
     auth.init();
   }
 
-  if (to.meta.requiresAuth && !auth.isAuthenticated) {
-    return { name: "unauthorized" };
+  // =========================
+  // AUTH CHECK
+  // =========================
+  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+  if (requiresAuth && !auth.isAuthenticated) {
+    return { name: "login" };
   }
 
+  // if (to.meta.requiresAuth && !auth.isAuthenticated) {
+  //   return { name: "unauthorized" };
+  // }
+
+  // =========================
+  // JIKA SUDAH LOGIN, TIDAK BISA KE LOGIN PAGE
+  // =========================
   if (to.name === "login" && auth.isAuthenticated) {
     return { name: "home" };
   }
 
-  if (to.meta.role && auth.user?.role !== to.meta.role) {
+  // =========================
+  // ROLE CHECK (MULTI ROLE)
+  // =========================
+  const allowedRoles = to.meta.roles;
+  if (allowedRoles && !allowedRoles.includes(auth.user?.role)) {
     return { name: "unauthorized" };
   }
+
+  // role check
+  // if (to.meta.role && auth.user?.role !== to.meta.role) {
+  //   return { name: "unauthorized" };
+  // }
 
   return true;
 });

@@ -2,8 +2,6 @@
 import { computed } from "vue";
 import { useChartStore } from "@/stores/useChartStore";
 
-// import { useChartStore } from "../stores/useChartStore";
-
 const props = defineProps({
   datasets: Object,
 });
@@ -35,6 +33,14 @@ const getSeriesByConfig = (dataset, cfg) => {
 
   if (aggregation === "yearly") {
     return dataset?.growth?.yearly?.data ?? [];
+  }
+
+  if (aggregation === "monthly" && method === "yony") {
+    return (
+      dataset?.growth?.monthly?.yony_m?.data ??
+      dataset?.growth?.monthly?.yony?.data ??
+      []
+    );
   }
 
   return dataset?.growth?.[aggregation]?.[method]?.data ?? [];
