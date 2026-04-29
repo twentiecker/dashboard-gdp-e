@@ -54,10 +54,12 @@ const viewFile = (file) => {
         :value="data"
         paginator
         :rows="10"
+        sortField="file_name"
+        :sortOrder="-1"
         responsiveLayout="stack"
         breakpoint="768px"
       >
-        <Column header="FILE NAME">
+        <Column header="FILE NAME" field="file_name" sortable>
           <template #body="slotProps">
             <div class="flex items-center gap-3">
               <img

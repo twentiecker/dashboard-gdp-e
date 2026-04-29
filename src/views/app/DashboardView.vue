@@ -3107,6 +3107,7 @@ const buildChartOptions = (chartTypeRef, isRightChart = false) =>
             },
           },
         },
+        datalabels: { display: false },
       },
       scales: {
         xMonthly: {

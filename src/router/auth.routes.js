@@ -5,17 +5,17 @@ const authRoutes = [
     children: [
       {
         path: "login",
-        name: "login",
+        name: "Login",
         component: () => import("@/views/auth/LoginView.vue"),
       },
-      {
-        path: "register",
-        name: "register",
-        component: () => import("@/views/auth/RegisterView.vue"),
-        meta: {
-          roles: ["admin"],
-        },
-      },
+      // {
+      //   path: "register",
+      //   name: "Register",
+      //   component: () => import("@/views/auth/RegisterView.vue"),
+      //   meta: {
+      //     roles: ["admin"],
+      //   },
+      // },
     ],
   },
 ];

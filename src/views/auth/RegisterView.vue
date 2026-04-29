@@ -72,91 +72,95 @@ const onFormSubmit = ({ valid, values }) => {
 </script>
 
 <template>
-  <div class="auth-container">
-    <Toast />
+  <div class="app-container">
+    <div class="flex justify-center">
+      <Toast />
 
-    <Form
-      v-slot="$form"
-      :initialValues
-      :resolver
-      @submit="onFormSubmit"
-      class="flex flex-col gap-10 w-full sm:w-56"
-    >
-      <div class="flex flex-col items-center gap-1">
-        <h1>Register Here!</h1>
-        <p class="text-center">Please input your password and username.</p>
-      </div>
-      <div class="flex flex-col gap-4">
-        <div class="flex flex-col gap-1">
-          <InputText name="name" type="text" placeholder="Name" fluid />
-          <Message
-            v-if="$form.name?.invalid"
-            severity="error"
-            size="small"
-            variant="simple"
-            >{{ $form.name.error?.message }}</Message
-          >
+      <Form
+        v-slot="$form"
+        :initialValues
+        :resolver
+        @submit="onFormSubmit"
+        class="flex flex-col gap-10 w-full sm:w-56"
+      >
+        <div class="flex flex-col items-center gap-1">
+          <h1>Register User</h1>
+          <p class="text-center">
+            Please input name, email, password and role.
+          </p>
         </div>
-        <div class="flex flex-col gap-1">
-          <InputText name="username" type="text" placeholder="Email" fluid />
-          <Message
-            v-if="$form.username?.invalid"
-            severity="error"
-            size="small"
-            variant="simple"
-            >{{ $form.username.error?.message }}</Message
-          >
-        </div>
-        <div class="flex flex-col gap-1">
-          <Password
-            name="password"
-            placeholder="Password"
-            :feedback="false"
-            toggleMask
-            fluid
-          />
-          <template v-if="$form.password?.invalid">
+        <div class="flex flex-col gap-2">
+          <div class="flex flex-col gap-1">
+            <InputText name="name" type="text" placeholder="Name" fluid />
             <Message
-              v-for="(error, index) of $form.password.errors"
-              :key="index"
+              v-if="$form.name?.invalid"
               severity="error"
               size="small"
               variant="simple"
-              >{{ error.message }}</Message
+              >{{ $form.name.error?.message }}</Message
             >
-          </template>
+          </div>
+          <div class="flex flex-col gap-1">
+            <InputText name="username" type="text" placeholder="Email" fluid />
+            <Message
+              v-if="$form.username?.invalid"
+              severity="error"
+              size="small"
+              variant="simple"
+              >{{ $form.username.error?.message }}</Message
+            >
+          </div>
+          <div class="flex flex-col gap-1">
+            <Password
+              name="password"
+              placeholder="Password"
+              :feedback="false"
+              toggleMask
+              fluid
+            />
+            <template v-if="$form.password?.invalid">
+              <Message
+                v-for="(error, index) of $form.password.errors"
+                :key="index"
+                severity="error"
+                size="small"
+                variant="simple"
+                >{{ error.message }}</Message
+              >
+            </template>
+          </div>
+          <div class="flex flex-col gap-1">
+            <Select
+              name="role"
+              :options="roles"
+              optionLabel="name"
+              placeholder="Select a Role"
+              fluid
+            />
+            <Message
+              v-if="$form.role?.invalid"
+              severity="error"
+              size="small"
+              variant="simple"
+              >{{ $form.role.error?.message }}</Message
+            >
+          </div>
         </div>
-        <div class="flex flex-col gap-1">
-          <Select
-            name="role"
-            :options="roles"
-            optionLabel="name"
-            placeholder="Select a Role"
-            fluid
+        <div class="flex flex-col items-center gap-1">
+          <Button
+            type="submit"
+            variant="outlined"
+            severity="contrast"
+            label="Register"
+            class="w-full"
           />
-          <Message
-            v-if="$form.role?.invalid"
-            severity="error"
-            size="small"
-            variant="simple"
-            >{{ $form.role.error?.message }}</Message
-          >
-        </div>
-      </div>
-      <div class="flex flex-col items-center gap-1">
-        <Button
-          type="submit"
-          variant="outlined"
-          severity="contrast"
-          label="Register"
-          class="w-full"
-        />
-        <!-- <p class="text-xs">
+          <!-- <p class="text-xs">
           Already have an account?
-          <router-link :to="{ name: 'login' }">Login</router-link>
+          <router-link :to="{ name: 'Login' }">Login</router-link>
           here
         </p> -->
-      </div>
-    </Form>
+        </div>
+      </Form>
+    </div>
   </div>
 </template>

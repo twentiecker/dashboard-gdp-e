@@ -7,6 +7,10 @@ import router from "./router";
 import "./assets/style.css";
 import "primeicons/primeicons.css";
 import App from "./App.vue";
+import { Chart as ChartJS } from "chart.js";
+import ChartDataLabels from "chartjs-plugin-datalabels";
+
+ChartJS.register(ChartDataLabels);
 
 const app = createApp(App);
 app.use(PrimeVue, {

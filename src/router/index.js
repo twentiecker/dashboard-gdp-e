@@ -24,18 +24,18 @@ router.beforeEach((to) => {
   // =========================
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
   if (requiresAuth && !auth.isAuthenticated) {
-    return { name: "login" };
+    return { name: "Login" };
   }
 
   // if (to.meta.requiresAuth && !auth.isAuthenticated) {
-  //   return { name: "unauthorized" };
+  //   return { name: "Unauthorized" };
   // }
 
   // =========================
   // JIKA SUDAH LOGIN, TIDAK BISA KE LOGIN PAGE
   // =========================
   if (to.name === "login" && auth.isAuthenticated) {
-    return { name: "home" };
+    return { name: "Home" };
   }
 
   // =========================
@@ -43,12 +43,12 @@ router.beforeEach((to) => {
   // =========================
   const allowedRoles = to.meta.roles;
   if (allowedRoles && !allowedRoles.includes(auth.user?.role)) {
-    return { name: "unauthorized" };
+    return { name: "Unauthorized" };
   }
 
   // role check
   // if (to.meta.role && auth.user?.role !== to.meta.role) {
-  //   return { name: "unauthorized" };
+  //   return { name: "Unauthorized" };
   // }
 
   return true;

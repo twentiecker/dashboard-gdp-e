@@ -5,7 +5,7 @@ const errorRoutes = [
     children: [
       {
         path: "unauthorized",
-        name: "unauthorized",
+        name: "Unauthorized",
         component: () => import("@/views/errors/UnauthorizedView.vue"),
       },
     ],

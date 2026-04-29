@@ -6,7 +6,7 @@ const appRoutes = [
     children: [
       {
         path: "",
-        name: "home",
+        name: "Home",
         component: () => import("@/views/app/HomeView.vue"),
         meta: {
           roles: [
@@ -26,7 +26,7 @@ const appRoutes = [
       },
       {
         path: "insight/:category",
-        name: "insight",
+        name: "Insight",
         component: () => import("@/views/app/InsightView.vue"),
         meta: {
           roles: [
@@ -46,7 +46,7 @@ const appRoutes = [
       },
       {
         path: "data",
-        name: "data",
+        name: "Data",
         component: () => import("@/views/app/DataView.vue"),
         meta: {
           roles: [
@@ -64,7 +64,7 @@ const appRoutes = [
       },
       {
         path: "dashboard",
-        name: "dashboard",
+        name: "Dashboard",
         component: () => import("@/views/app/DashboardView.vue"),
         meta: {
           roles: [
@@ -82,7 +82,7 @@ const appRoutes = [
       },
       {
         path: "kompilasi/:pdb",
-        name: "kompilasi",
+        name: "Kompilasi",
         component: () => import("@/views/app/KompilasiView.vue"),
         meta: {
           roles: [
@@ -101,7 +101,7 @@ const appRoutes = [
       },
       {
         path: "suplemen",
-        name: "suplemen",
+        name: "Suplemen",
         component: () => import("@/views/app/SuplemenView.vue"),
         meta: {
           roles: [
@@ -121,7 +121,7 @@ const appRoutes = [
       },
       {
         path: "materi/:category",
-        name: "materi",
+        name: "Materi",
         component: () => import("@/views/app/MateriView.vue"),
         meta: {
           roles: [
@@ -140,11 +140,47 @@ const appRoutes = [
         },
       },
       {
-        path: "upload",
-        name: "upload",
-        component: () => import("@/views/app/UploadView.vue"),
+        path: "upload-file",
+        name: "UploadFile",
+        component: () => import("@/views/app/UploadFileView.vue"),
         meta: {
           roles: ["admin"],
+        },
+      },
+      {
+        path: "upload-monitoring",
+        name: "UploadMonitoring",
+        component: () => import("@/views/app/UploadMonitoringView.vue"),
+        meta: {
+          roles: ["admin"],
+        },
+      },
+      {
+        path: "register",
+        name: "Register",
+        component: () => import("@/views/auth/RegisterView.vue"),
+        meta: {
+          roles: ["admin"],
+        },
+      },
+      {
+        path: "monitoring",
+        name: "Monitoring",
+        component: () => import("@/views/app/MonitoringView.vue"),
+        meta: {
+          roles: [
+            "admin",
+            "direktur",
+            "konsolidator",
+            "pkrt",
+            "pklnprt",
+            "pkp",
+            "pmtb",
+            "pi",
+            "xm",
+            "lapres",
+            "dnpeng",
+          ],
         },
       },
     ],

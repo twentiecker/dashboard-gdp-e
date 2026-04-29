@@ -3,7 +3,7 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-const goHome = () => router.push({ name: "home" });
+const goHome = () => router.push({ name: "Home" });
 </script>
 
 <template>

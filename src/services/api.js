@@ -100,7 +100,7 @@ api.interceptors.response.use(
 const logout = () => {
   const auth = useAuthStore();
   auth.logout();
-  router.push({ name: "login" }); // ✅ clean SPA redirect
+  router.push({ name: "Login" }); // ✅ clean SPA redirect
 };
 
 export default api;

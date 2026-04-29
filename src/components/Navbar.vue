@@ -9,130 +9,163 @@ const auth = useAuthStore();
 // =======================================================
 // ========================= MENU ========================
 // =======================================================
-// const items = ref([
-//   {
-//     label: "Beranda",
-//     icon: "pi pi-home",
-//     command: () => router.push({ name: "home" }),
-//   },
-//   {
-//     label: "Insight Ekonomi",
-//     icon: "pi pi-chart-line",
-//     items: [
-//       { label: "Lembaga Internasional", route: "/insight/intl" },
-//       { label: "BCA", route: "/insight/bca" },
-//       { label: "DJSEF", route: "/insight/djsef" },
-//       { label: "BRI", route: "/insight/bri" },
-//       { label: "LPS", route: "/insight/lps" },
-//       { label: "INDEF", route: "/insight/indef" },
-//       { label: "Danamon", route: "/insight/danamon" },
-//       { label: "Mandiri", route: "/insight/mandiri" },
-//       { label: "Pefindo", route: "/insight/pefindo" },
-//       { label: "Kemenko", route: "/insight/kemenko" },
-//       { label: "Kemenkeu", route: "/insight/kemenkeu" },
-//       { label: "Bank Indonesia", route: "/insight/bi" },
-//       { label: "Samuel Sekuritas Indonesia", route: "/insight/samuel" },
-//     ],
-//   },
-//   {
-//     label: "Data & Indikator",
-//     icon: "pi pi-database",
-//     items: [
-//       { label: "Data", route: "/data" },
+// const items = computed(() => {
+//   const menus = [];
+//   const role = auth.user?.role;
+
+//   // ===== ROLE DNPENG =====
+//   // Hanya bisa lihat: Insight Ekonomi, Suplemen, Materi
+//   if (role === "dnpeng") {
+//     menus.push(
 //       {
-//         label: "Lembar Kerja",
-//         url: "https://license365bps-my.sharepoint.com/:x:/g/personal/nhagustina_license365bps_onmicrosoft_com/IQDW5BuHdwLfRbBrsFz10KCaARPuGWByW6mXAOLzkxo8rZ8?rtime=VUjpn92L3kg",
-//         target: "_blank",
+//         label: "Beranda",
+//         icon: "pi pi-home",
+//         command: () => router.push({ name: "Home" }),
 //       },
-//       { label: "Dashboard", route: "/dashboard" },
-//     ],
-//   },
-//   {
-//     label: "Kompilasi Angka",
-//     icon: "pi pi-calculator",
-//     items: [
-//       { label: "PDB Pengeluaran", route: "/kompilasi/pengeluaran" },
-//       { label: "PDB Produksi", route: "/kompilasi/produksi" },
-//     ],
-//   },
-//   {
-//     label: "Suplemen",
-//     icon: "pi pi-paperclip",
-//     command: () => router.push({ name: "suplemen" }),
-//   },
-//   {
-//     label: "Materi",
-//     icon: "pi pi-book",
-//     items: [
-//       { label: "Vicon", route: "/materi/vicon" },
-//       { label: "Rapat SM", route: "/materi/rapat" },
-//       { label: "Paparan Pimpinan", route: "/materi/paparan" },
-//       { label: "BRS", route: "/materi/brs" },
-//       { label: "Lapres", route: "/materi/lapres" },
-//     ],
-//   },
-// ]);
+//       {
+//         label: "Monitoring",
+//         icon: "pi pi-desktop",
+//         command: () => router.push({ name: "Monitoring" }),
+//       },
+//       {
+//         label: "Insight Ekonomi",
+//         icon: "pi pi-chart-line",
+//         items: [
+//           { label: "Lembaga Internasional", route: "/insight/intl" },
+//           { label: "BCA", route: "/insight/bca" },
+//           { label: "DJSEF", route: "/insight/djsef" },
+//           { label: "BRI", route: "/insight/bri" },
+//           { label: "LPS", route: "/insight/lps" },
+//           { label: "INDEF", route: "/insight/indef" },
+//           { label: "Danamon", route: "/insight/danamon" },
+//           { label: "Mandiri", route: "/insight/mandiri" },
+//           { label: "Pefindo", route: "/insight/pefindo" },
+//           { label: "Kemenko", route: "/insight/kemenko" },
+//           { label: "Kemenkeu", route: "/insight/kemenkeu" },
+//           { label: "Bank Indonesia", route: "/insight/bi" },
+//           { label: "Samuel Sekuritas Indonesia", route: "/insight/samuel" },
+//         ],
+//       },
+//       {
+//         label: "Suplemen",
+//         icon: "pi pi-paperclip",
+//         command: () => router.push({ name: "Suplemen" }),
+//       },
+//       {
+//         label: "Materi",
+//         icon: "pi pi-book",
+//         items: [
+//           { label: "Vicon", route: "/materi/vicon" },
+//           { label: "Rapat SM", route: "/materi/rapat" },
+//           { label: "Paparan Pimpinan", route: "/materi/paparan" },
+//           { label: "BRS", route: "/materi/brs" },
+//           { label: "Lapres", route: "/materi/lapres" },
+//         ],
+//       },
+//     );
+
+//     return menus;
+//   }
+
+//   // ===== MENU DEFAULT =====
+//   menus.push(
+//     {
+//       label: "Beranda",
+//       icon: "pi pi-home",
+//       command: () => router.push({ name: "Home" }),
+//     },
+//     {
+//       label: "Monitoring",
+//       icon: "pi pi-desktop",
+//       command: () => router.push({ name: "Monitoring" }),
+//     },
+//     {
+//       label: "Insight Ekonomi",
+//       icon: "pi pi-chart-line",
+//       items: [
+//         { label: "Lembaga Internasional", route: "/insight/intl" },
+//         { label: "BCA", route: "/insight/bca" },
+//         { label: "DJSEF", route: "/insight/djsef" },
+//         { label: "BRI", route: "/insight/bri" },
+//         { label: "LPS", route: "/insight/lps" },
+//         { label: "INDEF", route: "/insight/indef" },
+//         { label: "Danamon", route: "/insight/danamon" },
+//         { label: "Mandiri", route: "/insight/mandiri" },
+//         { label: "Pefindo", route: "/insight/pefindo" },
+//         { label: "Kemenko", route: "/insight/kemenko" },
+//         { label: "Kemenkeu", route: "/insight/kemenkeu" },
+//         { label: "Bank Indonesia", route: "/insight/bi" },
+//         { label: "Samuel Sekuritas Indonesia", route: "/insight/samuel" },
+//       ],
+//     },
+//     {
+//       label: "Data & Indikator",
+//       icon: "pi pi-database",
+//       items: [
+//         // jika bukan lapres, tampilkan Data
+//         ...(role !== "lapres" ? [{ label: "Data", route: "/data" }] : []),
+
+//         {
+//           label: "Lembar Kerja",
+//           url: "https://license365bps-my.sharepoint.com/:x:/g/personal/nhagustina_license365bps_onmicrosoft_com/IQDW5BuHdwLfRbBrsFz10KCaARPuGWByW6mXAOLzkxo8rZ8?rtime=VUjpn92L3kg",
+//           target: "_blank",
+//         },
+
+//         // jika bukan lapres, tampilkan Dashboard
+//         ...(role !== "lapres"
+//           ? [{ label: "Dashboard", route: "/dashboard" }]
+//           : []),
+//       ],
+//     },
+//     {
+//       label: "Kompilasi Angka",
+//       icon: "pi pi-calculator",
+//       items: [
+//         { label: "PDB Pengeluaran", route: "/kompilasi/pengeluaran" },
+//         { label: "PDB Produksi", route: "/kompilasi/produksi" },
+//       ],
+//     },
+//     {
+//       label: "Suplemen",
+//       icon: "pi pi-paperclip",
+//       command: () => router.push({ name: "Suplemen" }),
+//     },
+//     {
+//       label: "Materi",
+//       icon: "pi pi-book",
+//       items: [
+//         { label: "Vicon", route: "/materi/vicon" },
+//         { label: "Rapat SM", route: "/materi/rapat" },
+//         { label: "Paparan Pimpinan", route: "/materi/paparan" },
+//         { label: "BRS", route: "/materi/brs" },
+//         { label: "Lapres", route: "/materi/lapres" },
+//       ],
+//     },
+//   );
+
+//   return menus;
+// });
+
 const items = computed(() => {
-  const menus = [];
   const role = auth.user?.role;
 
-  // ===== ROLE DNPENG =====
-  // Hanya bisa lihat: Insight Ekonomi, Suplemen, Materi
-  if (role === "dnpeng") {
-    menus.push(
-      {
-        label: "Beranda",
-        icon: "pi pi-home",
-        command: () => router.push({ name: "home" }),
-      },
-      {
-        label: "Insight Ekonomi",
-        icon: "pi pi-chart-line",
-        items: [
-          { label: "Lembaga Internasional", route: "/insight/intl" },
-          { label: "BCA", route: "/insight/bca" },
-          { label: "DJSEF", route: "/insight/djsef" },
-          { label: "BRI", route: "/insight/bri" },
-          { label: "LPS", route: "/insight/lps" },
-          { label: "INDEF", route: "/insight/indef" },
-          { label: "Danamon", route: "/insight/danamon" },
-          { label: "Mandiri", route: "/insight/mandiri" },
-          { label: "Pefindo", route: "/insight/pefindo" },
-          { label: "Kemenko", route: "/insight/kemenko" },
-          { label: "Kemenkeu", route: "/insight/kemenkeu" },
-          { label: "Bank Indonesia", route: "/insight/bi" },
-          { label: "Samuel Sekuritas Indonesia", route: "/insight/samuel" },
-        ],
-      },
-      {
-        label: "Suplemen",
-        icon: "pi pi-paperclip",
-        command: () => router.push({ name: "suplemen" }),
-      },
-      {
-        label: "Materi",
-        icon: "pi pi-book",
-        items: [
-          { label: "Vicon", route: "/materi/vicon" },
-          { label: "Rapat SM", route: "/materi/rapat" },
-          { label: "Paparan Pimpinan", route: "/materi/paparan" },
-          { label: "BRS", route: "/materi/brs" },
-          { label: "Lapres", route: "/materi/lapres" },
-        ],
-      },
-    );
-
-    return menus;
-  }
-
-  // ===== MENU DEFAULT =====
-  menus.push(
-    {
+  // =========================
+  // MASTER MENU
+  // =========================
+  const menuMap = {
+    beranda: {
       label: "Beranda",
       icon: "pi pi-home",
-      command: () => router.push({ name: "home" }),
+      command: () => router.push({ name: "Home" }),
     },
-    {
+
+    monitoring: {
+      label: "Monitoring",
+      icon: "pi pi-desktop",
+      command: () => router.push({ name: "Monitoring" }),
+    },
+
+    insight: {
       label: "Insight Ekonomi",
       icon: "pi pi-chart-line",
       items: [
@@ -151,26 +184,22 @@ const items = computed(() => {
         { label: "Samuel Sekuritas Indonesia", route: "/insight/samuel" },
       ],
     },
-    {
+
+    dataIndikator: {
       label: "Data & Indikator",
       icon: "pi pi-database",
       items: [
-        // jika bukan lapres, tampilkan Data
-        ...(role !== "lapres" ? [{ label: "Data", route: "/data" }] : []),
-
+        { label: "Data", route: "/data" },
         {
           label: "Lembar Kerja",
-          url: "https://license365bps-my.sharepoint.com/:x:/g/personal/nhagustina_license365bps_onmicrosoft_com/IQDW5BuHdwLfRbBrsFz10KCaARPuGWByW6mXAOLzkxo8rZ8?rtime=VUjpn92L3kg",
+          url: "https://license365bps-my.sharepoint.com/",
           target: "_blank",
         },
-
-        // jika bukan lapres, tampilkan Dashboard
-        ...(role !== "lapres"
-          ? [{ label: "Dashboard", route: "/dashboard" }]
-          : []),
+        { label: "Dashboard", route: "/dashboard" },
       ],
     },
-    {
+
+    kompilasi: {
       label: "Kompilasi Angka",
       icon: "pi pi-calculator",
       items: [
@@ -178,12 +207,14 @@ const items = computed(() => {
         { label: "PDB Produksi", route: "/kompilasi/produksi" },
       ],
     },
-    {
+
+    suplemen: {
       label: "Suplemen",
       icon: "pi pi-paperclip",
-      command: () => router.push({ name: "suplemen" }),
+      command: () => router.push({ name: "Suplemen" }),
     },
-    {
+
+    materi: {
       label: "Materi",
       icon: "pi pi-book",
       items: [
@@ -194,9 +225,36 @@ const items = computed(() => {
         { label: "Lapres", route: "/materi/lapres" },
       ],
     },
-  );
 
-  return menus;
+    materiLapres: {
+      label: "Materi",
+      icon: "pi pi-book",
+      items: [{ label: "Lapres", route: "/materi/lapres" }],
+    },
+  };
+
+  // =========================
+  // ROLE CONFIG
+  // =========================
+  const roleMenus = {
+    dnpeng: ["beranda", "monitoring", "insight", "suplemen", "materi"],
+
+    lapres: ["kompilasi", "suplemen", "materiLapres"],
+
+    default: [
+      "beranda",
+      "monitoring",
+      "insight",
+      "dataIndikator",
+      "kompilasi",
+      "suplemen",
+      "materi",
+    ],
+  };
+
+  const selectedMenus = roleMenus[role] || roleMenus.default;
+
+  return selectedMenus.map((key) => menuMap[key]);
 });
 
 // =======================================================
@@ -206,7 +264,7 @@ const items = computed(() => {
 //   {
 //     label: "Beranda",
 //     icon: "pi pi-home",
-//     command: () => router.push({ name: "home" }),
+//     command: () => router.push({ name: "Home" }),
 //   },
 //   {
 //     label: "Insight Ekonomi",
@@ -312,7 +370,7 @@ const items = computed(() => {
 //   {
 //     label: "Suplemen",
 //     icon: "pi pi-paperclip",
-//     command: () => router.push({ name: "suplemen" }),
+//     command: () => router.push({ name: "Suplemen" }),
 //   },
 //   {
 //     label: "Materi",
@@ -334,45 +392,26 @@ const items = computed(() => {
 //   },
 // ]);
 
-// const login = () => router.push({ name: "login" });
+// const login = () => router.push({ name: "Login" });
 const logout = () => {
   auth.logout();
-  router.push({ name: "login" });
+  router.push({ name: "Login" });
 };
 
 const endMenu = ref();
-// const endItems = computed(() => {
-//   const items = [];
-
-//   if (auth.user.role === "admin") {
-//     items.push({
-//       label: "Register",
-//       icon: "pi pi-user-plus",
-//       command: () => router.push({ name: "reegister" }),
-//     });
-//     items.push({
-//       label: "Upload",
-//       icon: "pi pi-upload",
-//       command: () => router.push({ name: "upload" }),
-//     });
-//   }
-
-//   items.push({
-//     label: "Signout",
-//     icon: "pi pi-sign-out",
-//     command: () => logout(),
-//   });
-
-//   return items;
-// });
 
 const endItems = computed(() => {
   const items = [];
 
   if (auth.user.role === "admin") {
     const adminMenus = [
-      { label: "Register", icon: "pi pi-user-plus", route: "register" },
-      { label: "Upload", icon: "pi pi-upload", route: "upload" },
+      { label: "Register", icon: "pi pi-user-plus", route: "Register" },
+      { label: "Upload File", icon: "pi pi-file", route: "UploadFile" },
+      {
+        label: "Upload Monitoring",
+        icon: "pi pi-database",
+        route: "UploadMonitoring",
+      },
     ];
 
     items.push(

@@ -67,7 +67,7 @@ const onFormSubmit = async ({ valid, values }) => {
       life: 3000,
     });
 
-    router.push({ name: "home" });
+    router.push({ name: "Home" });
   } catch (err) {
     toast.add({
       severity: "error",
@@ -136,7 +136,7 @@ const onFormSubmit = async ({ valid, values }) => {
         />
         <!-- <p class="text-xs">
           Don't have an account?
-          <router-link :to="{ name: 'register' }">Register</router-link>
+          <router-link :to="{ name: 'Register' }">Register</router-link>
           here
         </p> -->
       </div>
